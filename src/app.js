@@ -2,6 +2,7 @@ const express=require('express')
 const connectDB=require('./config/database')
 const cookieParser=require('cookie-parser')
 const cors=require('cors')
+require("dotenv").config()
 const app=express() // instance of expressjs application
 
 app.use(express.json());
@@ -22,7 +23,7 @@ app.use("/",requestRouter)
 app.use("/",userRouter)
 connectDB().then(()=>{
     console.log("Database is connected XD")
-    app.listen(4000,()=>{
+    app.listen(process.env.PORT,()=>{
         console.log("Server is successfully listening on port 4000...")
     })
 }).catch((err)=>{

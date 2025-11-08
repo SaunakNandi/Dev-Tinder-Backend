@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken"
         if(!token){
             throw new Error("Token not there")
         }
-        const decodedObj= jwt.verify(token,"MY_SECRET_KEY")
+        const decodedObj= jwt.verify(token,`${process.env.JWT_SECRET}`)
         const {_id}=decodedObj
         const user=await User.findById(_id)
         console.log(user)
@@ -17,6 +17,6 @@ import jwt from "jsonwebtoken"
         req.user=user
         next()
     } catch (error) {
-        res.status(401).send("error at auth ",error.message)
+        res.status(401).send("Please Login ",error.message)
     }
 }
