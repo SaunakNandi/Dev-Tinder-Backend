@@ -38,7 +38,11 @@ authRouter.post('/login',async(req,res)=>{
         if(!isPasswordValid)
             throw new Error("Password is not correct")
         const token=await user.getJWT()
-        res.cookie("token",token)
+        res.cookie("token",token,{
+            httpOnly: true,
+            secure: true, // true if HTTPS
+            sameSite: "none",
+        })
         res.status(200).send({message:"Login Successfully!",data:user})
     } catch (error) {
         res.status(400).send(error.message)
